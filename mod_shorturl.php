@@ -1,7 +1,7 @@
 <?php
 /**
  * Short URL! Module Entry Point
- *
+ * Autor : Salah JAAFAR
  * @package    Joomla.Tutorials
  * @subpackage Modules
  * @license    GNU/GPL, see LICENSE.php
@@ -13,21 +13,6 @@
 
 // No direct access
 defined('_JEXEC') or die();
-// Include the syndicate functions only once
-// echo JUri::getInstance();
-// echo '<br>';
-use Joomla\CMS\Factory;
-echo "<br>Current time is " . date("h:i:sa") . "<br>";
-$cache = Factory::getCache('mod_demo_cache', 'callback');
-$caching = $cache->getCaching();
-if ($caching)
-{
- echo "<br>Caching enabled<br>";
-}
-else
-{
- echo "<br>Caching not enabled<br>";
-}
 $joomlaApp = JFactory::getApplication()->input;
 $option = $joomlaApp->getCmd('option');
 $view = $joomlaApp->getCmd('view');
