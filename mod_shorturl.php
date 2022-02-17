@@ -1,7 +1,7 @@
 <?php
 /**
  * Short URL! Module Entry Point
- * Autor : Salah JAAFAR
+ *
  * @package    Joomla.Tutorials
  * @subpackage Modules
  * @license    GNU/GPL, see LICENSE.php
@@ -13,6 +13,21 @@
 
 // No direct access
 defined('_JEXEC') or die();
+// Include the syndicate functions only once
+// echo JUri::getInstance();
+// echo '<br>';
+use Joomla\CMS\Factory;
+echo "<br>Current time is " . date("h:i:sa") . "<br>";
+$cache = Factory::getCache('mod_demo_cache', 'callback');
+$caching = $cache->getCaching();
+if ($caching)
+{
+ echo "<br>Caching enabled<br>";
+}
+else
+{
+ echo "<br>Caching not enabled<br>";
+}
 $joomlaApp = JFactory::getApplication()->input;
 $option = $joomlaApp->getCmd('option');
 $view = $joomlaApp->getCmd('view');
@@ -21,12 +36,14 @@ $class = '';
 $db = JFactory::getDBO();
 if ($option == 'com_content' && $view == 'article') {
 
+    // length of hash to generate, up to the output length of the hash function used
+    $length = 5;
     // The following should retrieve the date down to your desired resolution.
     // If you want a daily code, retrieve only the date-specific parts
     // For hourly resolution, retrieve the date and hour, but no minute parts
     $today = date('Y-m-d H:i:s'); // e.g. "03.10.01"
     
-    $hashurl = uniqid(); // Hash it
+    $hashurl = substr(hash('SHA256', $today), 0, $length); // Hash it
     $comp = 1;
     while ($comp > 0){
     $query = "SELECT `comment` FROM `#__redirect_links` WHERE `comment`= '$hashurl' ORDER BY `id` DESC ";
