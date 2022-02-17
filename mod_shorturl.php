@@ -21,14 +21,12 @@ $class = '';
 $db = JFactory::getDBO();
 if ($option == 'com_content' && $view == 'article') {
 
-    // length of hash to generate, up to the output length of the hash function used
-    $length = 5;
     // The following should retrieve the date down to your desired resolution.
     // If you want a daily code, retrieve only the date-specific parts
     // For hourly resolution, retrieve the date and hour, but no minute parts
     $today = date('Y-m-d H:i:s'); // e.g. "03.10.01"
     
-    $hashurl = substr(hash('SHA256', $today), 0, $length); // Hash it
+    $hashurl = uniqid(); // Hash it
     $comp = 1;
     while ($comp > 0){
     $query = "SELECT `comment` FROM `#__redirect_links` WHERE `comment`= '$hashurl' ORDER BY `id` DESC ";
